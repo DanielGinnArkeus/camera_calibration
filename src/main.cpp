@@ -1,16 +1,30 @@
-#include <iostream>
-#include <vector>
-#include <string>
+#include <stdio.h>
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
 
-using namespace std;
+using namespace cv;
 
-int main() {
-    vector<string> msg {"Congrats", "on", "building", "C++ code", "using CMake!"};
-
-    for (const string& word : msg)
+int main(int argc, char** argv) 
+{
+    if ( argc != 2 )
     {
-        cout << word << " ";
+        printf("usage: DisplayImage.out <Image_Path>\n");
+        return -1;
     }
-    cout << endl;
+
+    Mat image;
+    image = cv::imread(argv[1], cv::IMREAD_COLOR);
+    
+    if ( !image.data )
+    {
+        printf("No image data \n");
+        return -1;
+    }
+    cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE );
+    cv::imshow("Display Image", image);
+ 
+    cv::waitKey(0);
+
     return 0;
 }
